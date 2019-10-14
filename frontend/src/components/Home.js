@@ -4,9 +4,10 @@
  * beneath the Home component.
  */
 
-const React = require('react');
+const React = require("react");
 
-const NotebookList = require('./NotebookList');
+const NotebookList = require("./NotebookList");
+const Statistic = require("./Statistic");
 
 /*
   *** TODO: Start building the frontend from here ***
@@ -16,9 +17,8 @@ const NotebookList = require('./NotebookList');
 const Home = () => (
   <div className="container">
     <h1>Neverwrote</h1>
-    <p>
-      This placeholder text was rendered by the <code>Home</code> component.
-    </p>
+    <blockquote>Never say "I never wrote that down" ever again!</blockquote>
+    <Statistic />
     <NotebookList />
   </div>
 );
