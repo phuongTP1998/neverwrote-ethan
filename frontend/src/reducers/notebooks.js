@@ -3,7 +3,7 @@ const api = require("../helpers/api");
 
 // Action type constants
 /* *** TODO: Put action constants here *** */
-const GET_NOTE = "neverwrote-ethan/notebooks/GET_NOTE";
+const GET_NOTEBOOK = "neverwrote-ethan/notebooks/GET_NOTEBOOK";
 const INSERT = "neverwrote-ethan/notebooks/INSERT";
 const CHANGE = "neverwrote-ethan/notebooks/CHANGE";
 const REMOVE = "neverwrote-ethan/notebooks/REMOVE";
@@ -19,10 +19,11 @@ function reducer(state, action) {
   action = action || {};
 
   switch (action.type) {
-    case GET_NOTE: {
+    case GET_NOTEBOOK: {
       const unsortedNotebooks = _.concat(state.data, action.notebooks);
 
       const data = _.orderBy(unsortedNotebooks, "createdAt", "desc");
+
 
       return _.assign({}, state, { data });
     }
@@ -65,7 +66,7 @@ reducer.changeNotebooks = notebooks => {
 };
 
 reducer.loadNotebooks = notebooks => {
-  return { type: GET_NOTE, notebooks };
+  return { type: GET_NOTEBOOK, notebooks };
 };
 
 reducer.getNotebooks = () => {
@@ -100,7 +101,7 @@ reducer.addNotebooks = (title, callback) => {
           callback();
       }).catch(() => {
         alert(
-          "Failed to add new note!"
+          "Failed to add new notebook!"
         )
       })
   }

@@ -17,8 +17,6 @@ class NotebookList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.props.getNotebooks();
-
     this.state = { newNote: false };
   }
 
@@ -28,10 +26,14 @@ class NotebookList extends React.Component {
     };
 
     const saveNotebook = title => {
-      this.props.addNotebooks(title , err => {
-        if(!err) closeEdit();
+      this.props.addNotebooks(title, err => {
+        if (!err) closeEdit();
       });
-    }
+    };
+
+    const getNote = () => {
+      console.log("go go go");
+    };
 
     const createNotebookListItem = notebook => {
       return (
@@ -43,14 +45,18 @@ class NotebookList extends React.Component {
           >
             <i className="fa fa-remove"></i>
           </button>
-          {notebook.title}
+          <a onClick={getNote} style={{ cursor: "pointer" }}>
+            {notebook.title}
+          </a>
         </li>
       );
     };
 
     let newNotebookButton;
     if (this.state.newNote) {
-      newNotebookButton = <NewNotebook onCancel={closeEdit} onSave={saveNotebook}/>;
+      newNotebookButton = (
+        <NewNotebook onCancel={closeEdit} onSave={saveNotebook} />
+      );
     } else {
       newNotebookButton = (
         <button

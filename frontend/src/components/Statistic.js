@@ -1,16 +1,27 @@
 const React = require("react");
 const ReactRedux = require("react-redux");
 
+const _ = require("lodash");
+
 const createActionDispatchers = require("../helpers/createActionDispatchers");
 const notebooksActionCreators = require("../reducers/notebooks");
+const notesActionCreators = require("../reducers/notes");
 
 class Statistic extends React.Component {
   constructor(props) {
     super(props);
-    console.log("Statistic");
+    this.props.getNotebooks();
+   // this.props.getNotes();
   }
 
   render() {
+    function getOldestNotebook(data) {
+      const last = _.maxBy(data, notebook => notebook.id);
+      if (last) {
+        return last.title;
+      }
+    }
+
     return (
       <div>
         <h1> Statistic </h1>
@@ -36,11 +47,11 @@ class Statistic extends React.Component {
             </tr>
             <tr>
               <td>notebookCount</td>
-              <td>{}</td>
+              <td>{this.props.notebooks.data.length}</td>
             </tr>
             <tr>
               <td>oldestNotebook</td>
-              <td>{}</td>
+              <td>{getOldestNotebook(this.props.notebooks.data)}</td>
             </tr>
             <tr>
               <td>recentlyUpdatedNote</td>
@@ -53,11 +64,18 @@ class Statistic extends React.Component {
   }
 }
 
-// const NotebookListContainer = ReactRedux.connect(
-//   state => ({
-//     notebooks: state.notebooks
-//   }),
-//   createActionDispatchers(notebooksActionCreators)
-// )(NotebookList);
+const NotebookListContainer = ReactRedux.connect(
+  state => ({
+    notebooks: state.notebooks
+  }),
+  createActionDispatchers(notebooksActionCreators)
+)(Statistic);
 
-module.exports = Statistic;
+const NoteListContainer = ReactRedux.connect(
+  state => ({
+    notes: state.notes
+  }),
+  createActionDispatchers(notesActionCreators)
+)(Statistic);
+
+module.exports = NotebookListContainer, NoteListContainer;
