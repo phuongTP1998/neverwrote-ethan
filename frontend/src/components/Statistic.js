@@ -11,7 +11,7 @@ class Statistic extends React.Component {
   constructor(props) {
     super(props);
     this.props.getNotebooks();
-   // this.props.getNotes();
+    this.props.getNotes();
   }
 
   render() {
@@ -19,6 +19,13 @@ class Statistic extends React.Component {
       const last = _.maxBy(data, notebook => notebook.id);
       if (last) {
         return last.title;
+      }
+    }
+
+    function getRecentlyUpdatedNote(notes) {
+      const recentlyUpdatedNote = _.maxBy(notes, note => note.id);
+      if(recentlyUpdatedNote) {
+        return recentlyUpdatedNote.title;
       }
     }
 
@@ -43,7 +50,7 @@ class Statistic extends React.Component {
           <tbody>
             <tr>
               <td>noteCount</td>
-              <td>{}</td>
+              <td>{this.props.notes.data.length}</td>
             </tr>
             <tr>
               <td>notebookCount</td>
@@ -55,7 +62,7 @@ class Statistic extends React.Component {
             </tr>
             <tr>
               <td>recentlyUpdatedNote</td>
-              <td>{}</td>
+              <td>{getRecentlyUpdatedNote(this.props.notes.data)}</td>
             </tr>
           </tbody>
         </table>
@@ -66,16 +73,10 @@ class Statistic extends React.Component {
 
 const NotebookListContainer = ReactRedux.connect(
   state => ({
-    notebooks: state.notebooks
-  }),
-  createActionDispatchers(notebooksActionCreators)
-)(Statistic);
-
-const NoteListContainer = ReactRedux.connect(
-  state => ({
+    notebooks: state.notebooks,
     notes: state.notes
   }),
-  createActionDispatchers(notesActionCreators)
+  createActionDispatchers(notebooksActionCreators, notesActionCreators)
 )(Statistic);
 
-module.exports = NotebookListContainer, NoteListContainer;
+module.exports = NotebookListContainer;

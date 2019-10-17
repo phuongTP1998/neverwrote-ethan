@@ -24,7 +24,6 @@ function reducer(state, action) {
 
       const data = _.orderBy(unsortedNotebooks, "createdAt", "desc");
 
-
       return _.assign({}, state, { data });
     }
 
@@ -37,7 +36,7 @@ function reducer(state, action) {
     }
 
     case CHANGE: {
-
+  
     }
 
     case REMOVE: {
