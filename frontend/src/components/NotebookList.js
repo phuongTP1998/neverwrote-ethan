@@ -19,7 +19,18 @@ class NotebookList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { newNotebook: false, newNote: false, notebookId: -1 };
+    this.state = {
+      newNotebook: false,
+      newNote: false,
+      notebookId: -1,
+      term: ""
+    };
+
+    this.searchHandler = this.searchHandler.bind(this);
+  }
+
+  searchHandler(event) {
+    this.setState({ term: event.target.value });
   }
 
   render() {
@@ -84,10 +95,8 @@ class NotebookList extends React.Component {
           >
             <i className="fa fa-remove"></i>
           </button>
-          <a>
-            {note.title}
-          </a>
-          <span>  ----{note.content}</span>
+          <a>{note.title}</a>
+          <span> ----{note.content}</span>
         </li>
       );
     };
@@ -116,11 +125,33 @@ class NotebookList extends React.Component {
     } else {
     }
 
+    function searchingFor(term) {
+      return function(x) {
+        return x.title.toLowerCase().includes(term.toLowerCase()) || !term;
+      };
+    }
+
     return (
       <div>
         <h2>Notebooks</h2>
+        <form style={{marginBottom: "5px"}}>
+          <label>Searching Notebook Title: </label>
+          <input
+            type="text"
+            onChange={this.searchHandler}
+            value={this.state.term}
+            className="form-control"
+            placeholder="Searching Title"
+          />
+        </form>
+        <label>Adding new notebook</label>
+        <br></br>
         {newNotebookButton}
-        <ul>{this.props.notebooks.data.map(createNotebookListItem)}</ul>
+        <ul>
+          {this.props.notebooks.data
+            .filter(searchingFor(this.state.term))
+            .map(createNotebookListItem)}
+        </ul>
         {newNoteSection}
         <ul>
           {this.props.notes.data

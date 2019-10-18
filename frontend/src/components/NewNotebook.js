@@ -34,7 +34,7 @@ class NewNotebook extends React.Component {
         <input
           type="text"
           className="form-control"
-          placeholder="Notebook title..."
+          placeholder="Add notebook"
           value={this.state.title}
           onChange={onTitleChange}
         ></input>

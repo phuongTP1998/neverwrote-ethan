@@ -31,13 +31,13 @@ class Statistic extends React.Component {
 
     return (
       <div>
-        <h1> Statistic </h1>
-        <button className="btn btn-danger" style={{ marginBottom: "10px" }}>
+        <h1> Realtime Statistic </h1>
+        {/* <button className="btn btn-danger" style={{ marginBottom: "10px" }}>
           <i className="fa fa-refresh" style={{ marginRight: "4px" }}>
             {" "}
           </i>
           Refresh
-        </button>
+        </button> */}
         <table className="table table-hover table-bordered">
           <thead>
             <tr>
